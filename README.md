@@ -1,1 +1,1 @@
-# Self Driving Car: Predicting Steering Wheel Angle
+# Self Driving Car: Predicting Steer Wheel Angles
