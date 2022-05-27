@@ -1,5 +1,5 @@
 '''
-This code is for testing the model in the Udacity simulator and is available at: 
+This file contains the necessary code for testing the model in the Udacity simulator and is available at: 
 https://github.com/harveenchadha/Udacity-CarND-Behavioral-Cloning-Final.git
 
 Author: Harveen Singh Chadha
