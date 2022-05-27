@@ -2,6 +2,9 @@
 This file contains all the necessary functions for image augmentation
 '''
 
+import numpy as np
+import cv2
+
 def horizontal_flip(image, steering_angle):
     # Flip the image horizontally
     flipped_image = cv2.flip(image, 1)
@@ -12,7 +15,7 @@ def horizontal_flip(image, steering_angle):
     return flipped_image, steering_angle
 
 
-def augment_brightness(image):
+def brightness_modification(image):
     # Convert the image from RGB to HSV 
     hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     
@@ -20,7 +23,7 @@ def augment_brightness(image):
     hsv_image = np.array(hsv_image, dtype = np.float64)
     
     # Modify the brigthness changing the V value
-    random_brightness = 0.5 + np.random.uniform()
+    random_brightness = 0.7 + np.random.uniform()
     hsv_image[:,:,2] = hsv_image[:,:,2] * random_brightness
     hsv_image[:,:,2][hsv_image[:,:,2] > 255] = 255
     
@@ -84,7 +87,7 @@ def augment_image(df):
     image, steering_angle = translation(image, steering_angle)
 
     # Brightness augmentation
-    image = augment_brightness(image)
+    image = brightness_modification(image)
 
     # Image cropping
     image = top_bottom_crop(image)
