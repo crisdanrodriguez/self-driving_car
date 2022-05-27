@@ -2,8 +2,10 @@
 This file contains all the necessary functions for image augmentation
 '''
 
+#Import necessary libraries
 import numpy as np
 import cv2
+
 
 def horizontal_flip(image, steering_angle):
     # Flip the image horizontally
