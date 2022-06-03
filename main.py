@@ -34,6 +34,7 @@ def generator(df, batch_size = 32):
                 else:
                     keep_probability = 1
 
+            # Store image and steering angle
             batch_images[i_batch] = image
             batch_steering_angles[i_batch] = steering_angle
             
