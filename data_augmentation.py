@@ -83,7 +83,7 @@ def augment_image(df):
     image = cv2.imread(image_path, cv2.COLOR_BGR2RGB)
 
     # Convert the image from BGR to RGB
-    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
     
     # Horizontal and vertical shifts
     image, steering_angle = translation(image, steering_angle)
@@ -105,37 +105,5 @@ def augment_image(df):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     return image, steering_angle
-
-pr_threshold = 1
-
-def image_generator(df, batch_size = 32):
-    # Arrays to store images and steering angles
-    batch_images = np.zeros((batch_size, 66, 200, 3))
-    batch_steering_angles = np.zeros(batch_size)
-
-    # Generate more images from one image using data_augmentation
-    while True:
-        for i_batch in range(batch_size):
-            i_row = np.random.randint(len(df))
-            row_data = df.iloc[[i_row]].reset_index()
-
-            keep_probability = 0
-
-            # Images with lower angles have lower probability of getting represented in the data set
-            while keep_probability == 0:
-                image, steering_angle = augment_image(row_data)
-                if abs(steering_angle) < 0.1:
-                    pr_val = np.random.uniform()
-                    if pr_val > pr_threshold:
-                        keep_probability = 1
-                else:
-                    keep_probability = 1
-
-            batch_images[i_batch] = image
-            batch_steering_angles[i_batch] = steering_angle
-            
-        yield batch_images, batch_steering_angles
-
-
 
 
