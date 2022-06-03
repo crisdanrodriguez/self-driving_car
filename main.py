@@ -27,6 +27,7 @@ def generator(df, batch_size = 32):
             while keep_probability == 0:
                 # Data augmentation
                 image, steering_angle = augment_image(row_data)
+                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
                 if abs(steering_angle) < 0.1:
                     pr_val = np.random.uniform()
                     if pr_val > pr_threshold:

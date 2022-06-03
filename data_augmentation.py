@@ -80,7 +80,7 @@ def augment_image(df):
     steering_angle = df['steering_angle'][0] + calibration_angle
 
     # Read image
-    image = cv2.imread(image_path, cv2.COLOR_BGR2RGB)
+    image = cv2.imread(image_path)
 
     # Convert the image from BGR to RGB
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
