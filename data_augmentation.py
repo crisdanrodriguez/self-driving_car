@@ -80,11 +80,11 @@ def augment_image(df):
     steering_angle = df['steering_angle'][0] + calibration_angle
 
     # Read image
-    image = cv2.imread(image_path)
+    image = cv2.imread(image_path, cv2.COLOR_BGR2RGB)
 
     # Convert the image from BGR to RGB
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
-
+    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
+    
     # Horizontal and vertical shifts
     image, steering_angle = translation(image, steering_angle)
 
@@ -95,15 +95,18 @@ def augment_image(df):
     image = top_bottom_crop(image)
 
     # Resize image
-    image = cv2.resize(image, (66, 200), interpolation = cv2.INTER_AREA)
+    image = cv2.resize(image, (200, 66), interpolation = cv2.INTER_AREA)
 
     # Horizontal flip
     horizontal_flip_p = np.random.randint(2)
     if horizontal_flip_p == 0:
         image, steering_angle = horizontal_flip(image, steering_angle)
 
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
     return image, steering_angle
 
+pr_threshold = 1
 
 def image_generator(df, batch_size = 32):
     # Arrays to store images and steering angles
