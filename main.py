@@ -21,19 +21,7 @@ def generator(df, batch_size = 32):
             i_row = np.random.randint(len(df))
             row_data = df.iloc[[i_row]].reset_index()
 
-            keep_probability = 0
-
-            # Images with lower angles have lower probability of getting represented in the data set
-            while keep_probability == 0:
-                # Data augmentation
-                image, steering_angle = augment_image(row_data)
-                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
-                if abs(steering_angle) < 0.1:
-                    pr_val = np.random.uniform()
-                    if pr_val > pr_threshold:
-                        keep_probability = 1
-                else:
-                    keep_probability = 1
+            image, steering_angle = augment_image(row_data)
 
             # Store image and steering angle
             batch_images[i_batch] = image
@@ -48,23 +36,15 @@ df = pd.read_csv('data/driving_log.csv')
 # Divide data into training and testing (80/20)
 train_df, test_df = train_test_split(df, test_size = 0.2)
 
-# Variable for dropping data with small steering angles
-pr_threshold = 1
-
-# Training 5 epochs
-for i in range(5):
-    # Create training data for each epoch
-    train_generator = generator(train_df, batch_size = 64)
-    # Create testing data for each epoch
-    test_generator = generator(test_df, batch_size = 64)
+# Create training data for each epoch
+train_generator = generator(train_df, batch_size = 64)
+# Create testing data for each epoch
+test_generator = generator(test_df, batch_size = 64)
     
-    # Fit the model
-    cnn_model = nvidia_model()
-    cnn_model.fit(train_generator, steps_per_epoch = 20000, epochs = 1, validation_data = test_generator)
+# Fit the model
+cnn_model = nvidia_model()
+cnn_model.fit(train_generator, steps_per_epoch = 20000, epochs = 5, validation_data = test_generator)
     
-    # Reduce the probability of dropping data with small angles in each iteration
-    pr_threshold = 1 / (i + 1)
-
 # Save the model
 cnn_model.save('model.h5')
 
