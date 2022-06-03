@@ -95,7 +95,7 @@ def augment_image(df):
     image = top_bottom_crop(image)
 
     # Resize image
-    image = cv2.resize(image, (64, 64), interpolation = cv2.INTER_AREA)
+    image = cv2.resize(image, (66, 200), interpolation = cv2.INTER_AREA)
 
     # Horizontal flip
     horizontal_flip_p = np.random.randint(2)
@@ -105,6 +105,33 @@ def augment_image(df):
     return image, steering_angle
 
 
+def image_generator(df, batch_size = 32):
+    # Arrays to store images and steering angles
+    batch_images = np.zeros((batch_size, 66, 200, 3))
+    batch_steering_angles = np.zeros(batch_size)
+
+    # Generate more images from one image using data_augmentation
+    while True:
+        for i_batch in range(batch_size):
+            i_row = np.random.randint(len(df))
+            row_data = df.iloc[[i_row]].reset_index()
+
+            keep_probability = 0
+
+            # Images with lower angles have lower probability of getting represented in the data set
+            while keep_probability == 0:
+                image, steering_angle = augment_image(row_data)
+                if abs(steering_angle) < 0.1:
+                    pr_val = np.random.uniform()
+                    if pr_val > pr_threshold:
+                        keep_probability = 1
+                else:
+                    keep_probability = 1
+
+            batch_images[i_batch] = image
+            batch_steering_angles[i_batch] = steering_angle
+            
+        yield batch_images, batch_steering_angles
 
 
 
