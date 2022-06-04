@@ -101,27 +101,28 @@ def image_preprocessing(image):
 
 
 def batch_generator(images_path, steering_angles, batch_size, training_flag):
-    # Lists for saving batch of images and steering angles
-    images_bacth = []
-    steering_angles_batch = []
+    while True:
+        # Lists for saving batch of images and steering angles
+        images_bacth = []
+        steering_angles_batch = []
 
-    for i in range(batch_size):
-        # Select a random row with image path and steering angle
-        index = np.random.randint(0, len(images_path) - 1)
+        for i in range(batch_size):
+            # Select a random row with image path and steering angle
+            index = np.random.randint(0, len(images_path) - 1)
 
-        # Just image augmentation for training data
-        if training_flag:
-            # Image augmentation
-            image, steering_angle = augment_image(images_path[index], steering_angles[index])
-        else:
-            image = cv2.imread(images_path[index])
-            steering_angle = steering_angles[index]
+            # Just image augmentation for training data
+            if training_flag:
+                # Image augmentation
+                image, steering_angle = augment_image(images_path[index], steering_angles[index])
+            else:
+                image = cv2.imread(images_path[index])
+                steering_angle = steering_angles[index]
 
-        # Image preprocessing
-        image = image_preprocessing(image)
+            # Image preprocessing
+            image = image_preprocessing(image)
 
-        # Append image and steering angle
-        images_bacth.append(image)
-        steering_angles_batch.append(steering_angle)
+            # Append image and steering angle
+            images_bacth.append(image)
+            steering_angles_batch.append(steering_angle)
 
-    yield np.asarray(images_bacth), np.asarray(steering_angles_batch)
+        yield (np.asarray(images_bacth), np.asarray(steering_angles_batch))

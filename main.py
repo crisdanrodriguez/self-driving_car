@@ -9,6 +9,10 @@ import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import os
+
+# Disable debugging logs
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
 # Load data
@@ -24,25 +28,27 @@ steering_angles = df['steering_angle'].values
 # Divide data into training and validation (80/20)
 x_train, x_val, y_train, y_val = train_test_split(images_path, steering_angles, test_size = 0.2)
 print('Total Training Images: ', len(x_train))
-print('Total Validation Images: ', len(x_val))
+print('Total Validation Images: ', len(x_val), '\n')
     
 # Load the model
 cnn_model = nvidia_model()
 cnn_model.summary()
+print('\n')
 
 # Fit the model
 print('Training the Model...')
 start_time = time.time()
 
-cnn_model.fit(batch_generator(x_train, y_train, batch_size = 10, training_flag = 1),
-              steps_per_epoch = 20, epochs = 2, 
-              validation_data = batch_generator(x_val, y_val, batch_size = 10, training_flag = 0),
-              validation_steps = 20)
+cnn_model.fit(batch_generator(x_train, y_train, batch_size = 128, training_flag = 1),
+              steps_per_epoch = 300, epochs = 10, 
+              validation_data = batch_generator(x_val, y_val, batch_size = 128, training_flag = 0),
+              validation_steps = 200)
 
 end_time = time.time()
 training_time = end_time - start_time
-print('Training Duration: ', training_time)
+print('\n', 'Training Duration: ', training_time)
     
 # Save the model
 cnn_model.save('model.h5')
 print('Model Saved')
+
