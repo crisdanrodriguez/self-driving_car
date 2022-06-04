@@ -14,19 +14,19 @@ def nvidia_model():
     model = models.Sequential()
 
     # Layer 1
-    model.add(layers.Conv2D(24, (5, 5), activation = 'elu', strides = (2, 2), input_shape = (66, 200, 3)))
+    model.add(layers.Conv2D(24, (5, 5), strides = (2, 2), input_shape = (66, 200, 3), activation = 'elu'))
 
     # Layer 2
-    model.add(layers.Conv2D(36, (5, 5), activation = 'elu', strides = (2, 2)))
+    model.add(layers.Conv2D(36, (5, 5), strides = (2, 2), activation = 'elu'))
 
     # Layer 3
-    model.add(layers.Conv2D(48, (5, 5), activation = 'elu', strides = (2, 2)))
+    model.add(layers.Conv2D(48, (5, 5), strides = (2, 2), activation = 'elu'))
 
     # Layer 4
-    model.add(layers.Conv2D(64, (3, 3), activation = 'elu', strides = (1, 1)))
+    model.add(layers.Conv2D(64, (3, 3), strides = (1, 1), activation = 'elu'))
 
     # Layer 5
-    model.add(layers.Conv2D(64, (3, 3), activation = 'elu', strides = (1, 1)))
+    model.add(layers.Conv2D(64, (3, 3), strides = (1, 1), activation = 'elu'))
 
     # Flatten
     model.add(layers.Flatten())
