@@ -8,6 +8,7 @@ https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end
 # Import necessary libraries
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
+from tensorflow.keras.optimizers import Adam
 
 
 def nvidia_model():
@@ -43,6 +44,6 @@ def nvidia_model():
     # Output layer
     model.add(layers.Dense(1))
 
-    model.compile(optimizer = 'adam', loss = 'mse', metrics = ['accuracy'])
+    model.compile(optimizer = Adam(lr = 0.0001), loss = 'mse', metrics = ['accuracy'])
 
     return model

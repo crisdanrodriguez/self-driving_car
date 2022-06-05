@@ -25,7 +25,7 @@ def brightness_modification(image):
     image = np.array(image, dtype = np.float64)
     
     # Modify the brigthness changing the V value
-    random_brightness = 0.7 + np.random.uniform()
+    random_brightness = 0.5 + np.random.uniform()
     image[:,:,2] = image[:,:,2] * random_brightness
     image[:,:,2][image[:,:,2] > 255] = 255
     
@@ -65,7 +65,22 @@ def top_bottom_crop(image):
     return cropped_image
 
 
-def augment_image(image_path, steering_angle):
+def augment_image(df):
+    camera_side = np.random.randint(3)
+
+    # Angle calibration according to image side
+    if camera_side == 0:
+        image_path = df.iloc[0]['center_camera'].strip()
+        angle_calibration = 0
+    elif camera_side == 1:
+        image_path = df.iloc[0]['left_camera'].strip()
+        angle_calibration = 0.25
+    elif camera_side == 2:
+        image_path = df.iloc[0]['right_camera'].strip()
+        angle_calibration = -0.25
+
+    steering_angle = df.iloc[0]['steering_angle'] + angle_calibration
+
     #Read the image as RGB
     image = cv2.imread(image_path)
 
@@ -91,8 +106,11 @@ def image_preprocessing(image):
     # Image cropping
     image = top_bottom_crop(image)
 
+    # Image blurring
+    image = cv2.GaussianBlur(image, (3,3), 0)
+
     # Resize image
-    image = cv2.resize(image, (200, 66))
+    image = cv2.resize(image, (200, 66), interpolation = cv2.INTER_AREA)
 
     # Ranging pixel values from 0 to 1
     image = image / 255
@@ -100,7 +118,7 @@ def image_preprocessing(image):
     return image
 
 
-def batch_generator(images_path, steering_angles, batch_size, training_flag):
+def batch_generator(df, batch_size, training_flag):
     while True:
         # Lists for saving batch of images and steering angles
         images_bacth = []
@@ -108,15 +126,29 @@ def batch_generator(images_path, steering_angles, batch_size, training_flag):
 
         for i in range(batch_size):
             # Select a random row with image path and steering angle
-            index = np.random.randint(0, len(images_path) - 1)
+            index = np.random.randint(0, len(df) - 1)
 
             # Just image augmentation for training data
             if training_flag:
                 # Image augmentation
-                image, steering_angle = augment_image(images_path[index], steering_angles[index])
+                image, steering_angle = augment_image(df.iloc[[index]])
             else:
-                image = cv2.imread(images_path[index])
-                steering_angle = steering_angles[index]
+                camera_side = np.random.randint(3)
+
+                # Angle calibration according to image side
+                if camera_side == 0:
+                    image_path = df.iloc[0]['center_camera'].strip()
+                    angle_calibration = 0
+                elif camera_side == 1:
+                    image_path = df.iloc[0]['left_camera'].strip()
+                    angle_calibration = 0.25
+                elif camera_side == 2:
+                    image_path = df.iloc[0]['right_camera'].strip()
+                    angle_calibration = -0.25
+
+                #Read the image as RGB
+                image = cv2.imread(image_path)
+                steering_angle = df.iloc[0]['steering_angle'] + angle_calibration
 
             # Image preprocessing
             image = image_preprocessing(image)

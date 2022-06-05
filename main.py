@@ -26,9 +26,9 @@ images_path = df['center_camera'].values
 steering_angles = df['steering_angle'].values
 
 # Divide data into training and validation (80/20)
-x_train, x_val, y_train, y_val = train_test_split(images_path, steering_angles, test_size = 0.2)
-print('Total Training Images: ', len(x_train))
-print('Total Validation Images: ', len(x_val), '\n')
+train_df, val_df = train_test_split(df, test_size = 0.2)
+print('Total Training Images: ', len(train_df))
+print('Total Validation Images: ', len(val_df), '\n')
     
 # Load the model
 cnn_model = nvidia_model()
@@ -39,10 +39,10 @@ print('\n')
 print('Training the Model...')
 start_time = time.time()
 
-cnn_model.fit(batch_generator(x_train, y_train, batch_size = 128, training_flag = 1),
+cnn_model.fit(batch_generator(train_df, batch_size = 100, training_flag = 1),
               steps_per_epoch = 300, epochs = 10, 
-              validation_data = batch_generator(x_val, y_val, batch_size = 128, training_flag = 0),
-              validation_steps = 200)
+              validation_data = batch_generator(val_df, batch_size = 100, training_flag = 0),
+              validation_steps = 300)
 
 end_time = time.time()
 training_time = end_time - start_time

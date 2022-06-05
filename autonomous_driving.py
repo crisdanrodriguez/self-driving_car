@@ -28,7 +28,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 sio = socketio.Server()
 
 app = Flask(__name__) # '__main__'
-maxSpeed = 30
+maxSpeed = 10
 
 
 @sio.on('telemetry')
