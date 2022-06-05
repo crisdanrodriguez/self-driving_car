@@ -17,7 +17,7 @@ def horizontal_flip(image, steering_angle):
     return flipped_image, steering_angle
 
 
-def brightness_modification(image):
+def brightness_reduction(image):
     # Convert the image from RGB to HSV 
     image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
     
@@ -25,7 +25,7 @@ def brightness_modification(image):
     image = np.array(image, dtype = np.float64)
     
     # Modify the brigthness changing the V value
-    random_brightness = 0.5 + np.random.uniform()
+    random_brightness = 0.8 - np.random.uniform(0, 0.4)
     image[:,:,2] = image[:,:,2] * random_brightness
     image[:,:,2][image[:,:,2] > 255] = 255
     
@@ -81,7 +81,7 @@ def augment_image(df):
 
     steering_angle = df.iloc[0]['steering_angle'] + angle_calibration
 
-    #Read the image as RGB
+    # Read the image as RGB
     image = cv2.imread(image_path)
 
     # Convert the image from BGR to RGB
@@ -93,7 +93,7 @@ def augment_image(df):
 
     if np.random.rand() < 0.5:
         # Brightness modification
-        image = brightness_modification(image)
+        image = brightness_reduction(image)
 
     if np.random.rand() < 0.5:
         # Horizontal flip
