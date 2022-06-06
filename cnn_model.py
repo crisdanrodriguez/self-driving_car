@@ -44,6 +44,6 @@ def nvidia_model():
     # Output layer
     model.add(layers.Dense(1))
 
-    model.compile(optimizer = Adam(lr = 0.0001), loss = 'mse')
+    model.compile(optimizer = Adam(learning_rate = 0.0001), loss = 'mse')
 
     return model

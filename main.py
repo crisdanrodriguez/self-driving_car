@@ -39,16 +39,15 @@ print('\n')
 print('Training the Model...')
 start_time = time.time()
 
-cnn_model.fit(batch_generator(train_df, batch_size = 128, training_flag = 1),
-              steps_per_epoch = 500, epochs = 10, 
-              validation_data = batch_generator(val_df, batch_size = 128, training_flag = 0),
-              validation_steps = 500)
+cnn_model.fit(batch_generator(train_df, batch_size = 64, training_flag = 1),
+              steps_per_epoch = 20000, epochs = 5, 
+              validation_data = batch_generator(val_df, batch_size = 64, training_flag = 0),
+              validation_steps = 20000)
 
 end_time = time.time()
 training_time = end_time - start_time
 print('\n', 'Training Duration: ', training_time)
     
 # Save the model
-cnn_model.save('model.h5')
+cnn_model.save('model1.h5')
 print('Model Saved')
-

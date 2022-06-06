@@ -3,6 +3,7 @@ This file contains all the necessary functions for image preprocessing
 '''
 
 #Import necessary libraries
+from cv2 import cvtColor
 import numpy as np
 import cv2
 
@@ -106,8 +107,8 @@ def image_preprocessing(image):
     # Image cropping
     image = top_bottom_crop(image)
 
-    # Image blurring
-    image = cv2.GaussianBlur(image, (3,3), 0)
+    # Convert the image from RGB to YUV
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
 
     # Resize image
     image = cv2.resize(image, (200, 66), interpolation = cv2.INTER_AREA)
