@@ -32,7 +32,7 @@ python autonomous_driving.py
 The model was tested on both tracks. On the first track, where the training data was collected, the model was able to run smoothly, however it is a bit unstable as it makes many small turns between left and right. On the other hand, in track 2 we can see that it has a better behavior and manages to run completely with a very good performance, so we can conclude that the model generalizes in a good way.
 
 ### Performance Video
-[![Click on Video to watch it on youtube](autonomous_driving_image.png)](https://youtu.be/dgYWUmMOcOk)
+[![](<img src = "" width = "200" height = "400"/>)](https://youtu.be/dgYWUmMOcOk)
 
 
 
