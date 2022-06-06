@@ -32,7 +32,9 @@ python autonomous_driving.py
 The model was tested on both tracks. On the first track, where the training data was collected, the model was able to run smoothly, however it is a bit unstable as it makes many small turns between left and right. On the other hand, in track 2 we can see that it has a better behavior and manages to run completely with a very good performance, so we can conclude that the model generalizes in a good way.
 
 ### Performance Video
-[![](https://github.com/crisdanrodriguez/self_driving_car/blob/eb5c0beed41ffa5a7220940f144086718af01af6/autonomous_driving_image.png)](https://youtu.be/dgYWUmMOcOk)
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/dgYWUmMOcOk/0.jpg)](http://www.youtube.com/watch?v=dgYWUmMOcOkE "Self-Driving Car: Predicting Steering Wheel Angle using Udacity's Simulator - Model Performance")
+  
+
 
 
 
