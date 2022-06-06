@@ -21,10 +21,6 @@ df = pd.read_csv('data/driving_log.csv', names = col_names)
 
 print('Total Images Imported: ', df.shape[0])
 
-# Save relevant data for our model
-images_path = df['center_camera'].values
-steering_angles = df['steering_angle'].values
-
 # Divide data into training and validation (80/20)
 train_df, val_df = train_test_split(df, test_size = 0.2)
 print('Total Training Images: ', len(train_df))
