@@ -5,7 +5,7 @@ A convolutional neural network (CNN) approach is used to implement a self-drivin
 For more information about the project check the [documentation](https://github.com/crisdanrodriguez/self_driving_car/blob/744b62edc634568150065124c0642c28ba1ba79d/Self-Driving%20Car,%20Predicting%20Steering%20Wheel%20Angle.pdf).
 
 ## Dataset
-The dataset is excluded from the repository due to its size. Data for this task can be gathered with the Udacity [simulator](https://github.com/udacity/self-driving-car-sim) itself. Indeed, when the simulator is set to training mode, the car is controlled by the human though the keyboard, and frames and steering directions are stored to disk.
+The dataset is excluded from the repository due to its size. Data for this task can be gathered with the [Udacity simulator](https://github.com/udacity/self-driving-car-sim) itself. Indeed, when the simulator is set to training mode, the car is controlled by the human though the keyboard, and frames and steering directions are stored to disk.
 
 ## Code Overview
 The code is structured as follows:
